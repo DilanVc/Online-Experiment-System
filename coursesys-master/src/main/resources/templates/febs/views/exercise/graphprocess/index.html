@@ -1,0 +1,591 @@
+<style>
+    #febs-apex-area .layui-card-header {
+        font-weight: 600;
+    }
+
+    .CodeMirror{
+        height: auto!important;
+        font-family:courier
+    }
+
+</style>
+
+
+
+<!--<link rel="stylesheet" href="layui/css/layui.css">-->
+
+<div class="layui-fluid layui-anim febs-anim" id="febs-apex-area" lay-title="在线实验">
+    
+    <div class="layui-row layui-col-space8 febs-container">
+        <!--<div class="layui-col-md2 layui-col-sm2 layui-col-xs4 ">
+            <div class="layui-card">
+                <div class="layui-card-header">问题列表</div>
+                <div class="layui-card-body" style="height:664px;overflow-y: scroll">
+                    <ul>
+                        <li style="line-height: 30px;color: #1890ff !important">
+                            <a>开始使用</a>
+                            <span class="layui-badge-rim layui-bg-blue" style="float: right; margin-top: 5px">Doing</span>
+                        </li>
+                        <li style="line-height: 30px;color: #1890ff !important">
+                            <a>开始使用</a>
+                            <span class="layui-badge-rim layui-bg-green" style="float: right; margin-top: 5px">Done</span>
+
+                        </li>
+                        <li style="line-height: 30px;color: #1890ff !important">
+                            <a>开始使用</a>
+                            <span class="layui-badge-rim layui-bg-red" style="float: right; margin-top: 5px">UnDo</span>
+                        </li>
+                        <li>模块规范</li>
+                        <li>常见问题</li>
+                        <li>更新日志</li>
+                    </ul>
+                </div>
+            </div>
+        </div>-->
+        <!--<div class="layui-col-md12 layui-col-sm12 layui-col-xs12 ">-->
+            <!---->
+        <!--</div>-->
+        <div class="layui-row">
+            <div class="layui-card">
+                <div class="layui-card-header">实验情况</div>
+                <div class="layui-card-body" style="height:104px;line-height: 50px">
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">实验标题：<span id="questionTitle"></span></div>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">开始时间：<span id="questionStart"></span></div>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">结束时间：<span id="questionEnd"></span></div>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">当前状态：<span id="questionState"></span></div>
+                    </div>
+
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">创建人：<span id="questionCreateUser"></span></div>
+                    </div>
+                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">
+                        <div class="grid-demo">创建时间：<span id="createTime"></span></div>
+                    </div>
+<!--                    <div class="layui-col-xs3 layui-col-sm3 layui-col-md3">-->
+<!--                        <div class="grid-demo">提交次数：<span id="submitTimes"></span></div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs8 ">
+            <div class="layui-card">
+                <div class="layui-card-header">问题陈述</div>
+                <!--<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">-->
+                    <!--<legend></legend>-->
+                <!--</fieldset>-->
+                <div class="layui-card-body" style="height:664px">
+                    <div style="height: 100%;overflow-y: scroll" id="questionContent">
+                        无内容
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md6 layui-col-sm6 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    代码输入
+                    <button type="button" data-method="openRecordModel" data-type="auto" id="record-button" class="layui-btn " style="float: right;margin-right: 10px">答题记录</button>
+                    <button type="button" data-method="openModel" data-type="auto" id="upload-button" class="layui-btn " style="float: right;margin-right: 10px">可用图片</button>
+                    <button type="button" id="submit-button" class="layui-btn " style="float: right;margin-right: 10px">提交</button>
+                    <button type="button" id="run-button" class="layui-btn " style="float: right;margin-right: 10px">运行</button>
+                </div>
+                <div class="layui-card-body" style="height:684px; padding-left: 0px; padding-top: 0px; padding-bottom: 0px;background-color: #0a0e14">
+                    <div style="height:100%;overflow-y: scroll!important;">
+                        <textarea id="code-area" name="code" style="height: auto!important;"></textarea>
+                        <textarea id="custom-code" name="code" style="display: none"></textarea>
+<!--                        textarea-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12 ">
+            <div class="layui-card">
+                <div  class="layui-card-header">结果输出</div>
+                <div class="layui-card-body">
+                    <div   id="custom-code-output" style="font-family:courier;font-size:14px;white-space: pre-line;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script data-th-src="@{febs/lay/data/dataSeries.js}"></script>
+<script id="demo" type="text/html">
+    <div class="layui-upload">
+<!--        <button type="button" class="layui-btn layui-inline" id="uploadButton">上传图片</button>-->
+<!--        <button type="button" class="layui-btn layui-inline" id="startUpload">开始上传</button>-->
+        <div class="layui-upload-list">
+            <table class="layui-table">
+                <thead>
+                <tr>
+                    <th>内容</th>
+                    <th>使用方法</th>
+                    <th>大小</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr></thead>
+                <tbody id="demoList">
+                {{#  layui.each(d.testPic, function(index, item){ }}
+                <tr>
+                    <td><img style="height: 60px;width: auto" src="images/{{ item.fileName }}"></td>
+                    <td>images/{{ item.fileName }}</td>
+                    <td>{{ item.fileSize }}b</td>
+                    <td>已上传</td>
+                    <td>无</td>
+                </tr>
+                {{#  }); }}
+                {{#  if(d.testPic.length === 0){ }}
+                    <tr>无数据</tr>
+                {{#  } }}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</script>
+<script id="recordTemp" type="text/html">
+    <ul class="layui-timeline" style="padding-left: 15px;padding-top: 15px;">
+        {{#  layui.each(d, function(index, item){ }}
+        <li class="layui-timeline-item" >
+            <i class="layui-icon layui-timeline-axis"></i>
+            <div class="layui-timeline-content layui-text">
+                {{# if(item.result == 'error'){}}
+                    <h3 class="layui-timeline-title" style="color: #FF5722!important;">{{ item.createTime }} - {{ item.result }}</h3>
+                {{# }else{ }}
+                    <h3 class="layui-timeline-title" style="color: #5FB878!important;">{{ item.createTime }} - {{ item.result }}</h3>
+                {{# } }}
+                <p class="layui-code">
+                    {{ item.questionAnswer }}
+                </p>
+            </div>
+        </li>
+        {{#  }); }}
+    </ul>
+    {{#  if(d.length === 0){ }}
+    <tr>无数据</tr>
+    {{#  } }}
+</script>
+
+
+
+    <script data-th-inline="javascript" type="text/javascript">
+    var paramArray = window.location.href.split("/");
+    var chapterId = paramArray[paramArray.length-1];
+    var currentQuestionId,picContentHtml,currentQuestion;
+    //根据DOM元素的id构造出一个编辑器
+    var editor = CodeMirror.fromTextArea(document.getElementById("code-area"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        continueComments: "Enter",
+        extraKeys: {"Ctrl-Q": "toggleComment","Ctrl": "autocomplete"},
+        tabSize:4,
+        lineWrapping: true,
+        undoDepth: 5,
+        mode: "javascript",
+        theme:"blackboard",// 主题
+        keyMap:"sublime",// 快键键风格
+        smartIndent: true , //智能缩进
+        styleActiveLine:true,// 显示选 中行的样式
+
+    });
+
+
+
+    layui.use(['jquery','febs', 'laytpl', 'upload'], function () {
+        let $ = layui.jquery,
+            febs = layui.febs,
+            laytpl = layui.laytpl,
+            upload = layui.upload;
+
+
+        console.log(chapterId)
+        // 问题回显
+        // console.log(currentQuestionId)
+        initQuestion(chapterId);
+        // 加载渲染问题
+        function initQuestion(chapterId) {
+            febs.get(ctx + 'chapter/' + chapterId, null, function (res) {
+                currentQuestion = res.data[0]
+                // console.log(currentQuestion)
+
+                currentQuestionId = currentQuestion.questionId;
+                console.log(currentQuestionId)
+                document.getElementById("febs-apex-area").setAttribute("lay-title", currentQuestion.questionTitle)
+                // 渲染页面
+                document.getElementById("questionContent").innerHTML = currentQuestion.questionContent;
+                document.getElementById("questionTitle").innerHTML = currentQuestion.questionTitle;
+                document.getElementById("questionStart").innerHTML = currentQuestion.questionStart;
+                document.getElementById("questionEnd").innerHTML = currentQuestion.questionEnd;
+                document.getElementById("questionState").innerHTML = "未完成";
+                document.getElementById("questionCreateUser").innerHTML = currentQuestion.createName;
+                document.getElementById("createTime").innerHTML = currentQuestion.createTime;
+                document.getElementById("submitTimes").innerHTML = 10;
+
+
+                //第三步：渲染模版
+                var getTpl = demo.innerHTML;
+                laytpl(getTpl).render(currentQuestion, function(html){
+                    picContentHtml = html;
+                });
+            })
+        }
+
+        // console.log(currentQuestion)
+
+
+        var demoListView = $('#demoList')
+            ,uploadListIns = upload.render({
+            elem: '#uploadButton'
+            ,url: ctx + 'questionFile' //改成您自己的上传接口
+            ,accept: 'file'
+            ,multiple: true
+            ,auto: false
+            ,bindAction: '#startUpload'
+            ,choose: function(obj){
+                var files = this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                //读取本地文件
+                obj.preview(function(index, file, result){
+                    var tr = $(['<tr id="upload-'+ index +'">'
+                        ,'<td>'+ file.name +'</td>'
+                        ,'<td>'+ (file.size/1024).toFixed(1) +'kb</td>'
+                        ,'<td>等待上传</td>'
+                        ,'<td>'
+                        ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                        ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        ,'</td>'
+                        ,'</tr>'].join(''));
+
+                    //单个重传
+                    tr.find('.demo-reload').on('click', function(){
+                        obj.upload(index, file);
+                    });
+
+                    //删除
+                    tr.find('.demo-delete').on('click', function(){
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+
+                    demoListView.append(tr);
+                });
+            }
+            ,done: function(res, index, upload){
+                if(res.files.file){ //上传成功
+                    var tr = demoListView.find('tr#upload-'+ index)
+                        ,tds = tr.children();
+                    tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                    tds.eq(3).html(''); //清空操作
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            ,error: function(index, upload){
+                var tr = demoListView.find('tr#upload-'+ index)
+                    ,tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+
+        //触发事件
+        var active = {
+            openModel: function(othis){
+                var type = othis.data('type');
+                layer.open({
+                    title:"可用图片",
+                    type: 1
+                    ,offset: type
+                    ,area: ['850px', '500px']
+                    ,id: 'picModel' //防止重复弹出
+                    ,content: picContentHtml
+                    ,btn: '关闭'
+                    ,btnAlign: 'r' //按钮居中
+                    ,shade: 0 //不显示遮罩
+                    ,yes: function(){
+                        layer.closeAll();
+                    }
+                });
+            },
+            openRecordModel: function(othis,contentHtml){
+
+                layui.use("code",function(){
+                    layui.code(
+                        {
+                            about:false,
+                            title:"你提交的代码"
+                        }
+                    );
+
+                });
+                var type = othis.data('type');
+                layer.open({
+                    title:"提交记录",
+                    type: 1
+                    ,offset: type
+                    ,area: ['850px', '500px']
+                    ,id: 'recordModel' //防止重复弹出
+                    ,content: contentHtml
+                    ,btn: '关闭'
+                    ,btnAlign: 'r' //按钮居中
+                    ,shade: 0 //不显示遮罩
+                    ,yes: function(){
+                        layer.closeAll();
+                    }
+                });
+            },
+        };
+
+        // 打开上传文件模态框
+        $('#upload-button').on('click', function(){
+            var othis = $(this), method = othis.data('method');
+            active[method] ? active[method].call(this, othis) : '';
+        });
+
+
+
+            $('#record-button').on('click', function(){
+
+                var data = {
+                    questionId:currentQuestionId
+                };
+
+                var that = this, contentHtml;
+                febs.get(ctx + 'record', data, function (recordData) {
+                    febs.alert.success('获取提交记录成功');
+                    var getTpl = recordTemp.innerHTML;
+                    var tempData = recordData.data;
+                    console.log(tempData)
+                    laytpl(getTpl).render(tempData, function(html){
+                        contentHtml = html;
+
+                    });
+                    console.log(contentHtml)
+                    var othis = $(that), method = othis.data('method');
+                    active[method] ? active[method].call(that, othis,contentHtml) : '';
+                });
+
+            });
+
+
+
+
+
+        $("#run-button").on("click",function () {
+            // 编译代码
+            var text = editor.getValue()
+
+            document.getElementById("custom-code").innerHTML = text
+            evaluateClear("custom-code")
+        })
+
+        // $("#submit-button").on("click",function () {
+        //     var result = document.getElementById("custom-code-output").innerHTML;
+        //     var code = editor.getValue()
+        //     if (code.trim() && result){
+        //         var checkStatus = currentQuestion.questionResult == result
+        //         if (checkStatus){
+        //             // 答案正确
+        //             febs.alert.success('您的答案正确！');
+        //         }else {
+        //             febs.alert.error('您的答案错误！');
+        //         }
+        //
+        //         // 题目状态表
+        //         febs.post(ctx + 'questionStudentStatus', {questionId:currentQuestionId});
+        //
+        //         var data = {
+        //             questionId:currentQuestionId,
+        //             questionAnswer:code,
+        //             result:checkStatus?"success":"error"
+        //         }
+        //
+        //         // 记录数据库中
+        //         febs.post(ctx + 'record', data, function () {
+        //             // febs.alert.success('记录成功！');
+        //         });
+        //     }else if (!code.trim()) {
+        //         febs.alert.error('您没有输入代码！');
+        //     }else if (!result){
+        //         febs.alert.error('您没有运行代码！');
+        //     }
+        //
+        // })
+        function isImg(){
+            console.log("1 2 3")
+            var f=$("#custom-code-output").val();
+
+                if(!/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f)) {
+                    alert("请仔细阅读题型在做答")
+                    return false;
+                }
+                return true;
+            }
+        function NotisImg(){
+            console.log("1 2 3")
+            var f=$("#custom-code-output").val();
+
+            if(/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(f)) {
+                alert("请仔细阅读题型在做答")
+                return  false;
+            }
+            return true;
+        }
+
+        $("#submit-button").on("click",function () {
+
+            var code = editor.getValue()
+            if (!code.trim()) {
+                febs.alert.error('您没有输入代码！');
+                return ;
+            }
+
+            console.log(currentQuestion)
+            // console.log(currentQuestion.questionResultType)
+
+            if (currentQuestion.questionResultType == 0){
+                // console.log("1 2 3")
+
+                if(isImg())
+                {
+                    // 图片结果判断1
+                    var canvasContainer = document.getElementsByTagName("canvas")
+                    // console.log(canvasContainer)
+                    var lastCanvas = canvasContainer[canvasContainer.length-1];
+                    var lastCanvas1 = lastCanvas.getContext("2d");
+                    // console.log("canvas的图片内容")
+                    // console.log(lastCanvas1.getImageData(0,0,lastCanvas.width,lastCanvas.height));
+
+                    // 生成图片结果的canvas
+                    var resultImage = new Image();
+                    resultImage.src = currentQuestion.questionResult;
+                    resultImage.onload = function() {
+                        // console.log(resultImage.complete)
+                        var resultCanvas = document.createElement('canvas');
+                        resultCanvas.width = lastCanvas.width;
+                        resultCanvas.height = lastCanvas.height;
+                        var resultContext = resultCanvas.getContext('2d');
+
+                        resultContext.drawImage(resultImage, 0,0);
+
+                        // console.log(resultContext.getImageData(0,0,resultCanvas.width,resultCanvas.height));
+                        // console.log(lastCanvas1.getImageData(0,0,lastCanvas.width,lastCanvas.height).data )
+                        // console.log(resultContext.getImageData(0,0,resultCanvas.width,resultCanvas.height).data)
+                        var pixels = lastCanvas1.getImageData(0,0,lastCanvas.width,lastCanvas.height);
+                        var pixels2 = resultContext.getImageData(0,0,resultCanvas.width,resultCanvas.height);
+                        var len = pixels.data.length;
+                        pixels = toGrayBinary(pixels, true, null, true);
+                        pixels2 = toGrayBinary(pixels2, true, null, true);
+                        var similar = 0;
+
+                        for (var i = 0; i < len; i++) {
+                            if (pixels[i] != pixels2[i])
+                                similar++;
+                        }
+                        similar = (similar / (resultCanvas.width * resultCanvas.height)) * 100;
+                        // console.log('%%%%%%%%%%%%%')
+                        // console.log(similar) ;
+                        // console.log('%%%%%%%%%%%%%')
+                        // 像素数据，是否二值化（bool），二值化闵值（0-255），是否返回二值化后序列（bool）
+                        function toGrayBinary(pixels, binary, value, sn) {
+                            var r, g, b, g, avg = 0, len = pixels.data.length, s = '';
+                            for (var i = 0; i < len; i += 4) {
+                                avg += (.299 * pixels.data[i] + .587 * pixels.data[i + 1] + .114 * pixels.data[i + 2]);
+                            }
+                            avg /= (len / 4);
+                            for (var i = 0; i < len; i += 4) {
+                                r = .299 * pixels.data[i];
+                                g = .587 * pixels.data[i + 1];
+                                b = .114 * pixels.data[i + 2];
+                                if (binary) {
+                                    if ((r + g + b) >= (value || avg)) {
+                                        g = 255;
+                                        if (sn) s += '1';
+                                    } else {
+                                        g = 0;
+                                        if (sn) s += '0';
+                                    }
+                                    g = (r + g + b) > (value || avg) ? 255 : 0;
+                                } else {
+                                    g = r + g + b;
+                                }
+                                pixels.data[i] = g,
+                                    pixels.data[i + 1] = g;
+                                pixels.data[i + 2] = g;
+                            }
+                            if (sn) return s;
+                            else return pixels;
+                        }
+                        if(similar==0)
+                        {
+                            febs.alert.success('您的答案正确！');
+                        }else {
+                            febs.alert.error('您的答案错误！');
+                        }
+
+
+                    }
+                }
+                // console.log("1 2 3")
+
+
+            } else if (currentQuestion.questionResultType == 1) {
+                if(NotisImg()){
+                    console.log("12 3 4 4 4 4 4 4  4 3")
+                    // 文本结果判断
+                    var result = document.getElementById("custom-code-output").innerHTML;
+                    // console.log(result.document.getElementsByTagName("p")[0].innerHTML)
+                    console.log(result )
+                    console.log(currentQuestion.questionResult)
+
+                    var code = editor.getValue()
+                    console.log(code )
+                    console.log(code.trim())
+                    if (code.trim() && result){
+                        var checkStatus = currentQuestion.questionResult == result
+
+                        if (checkStatus){
+                            // 答案正确
+                            febs.alert.success('您的答案正确！');
+                        }else {
+                            febs.alert.error('您的答案错误！');
+                        }
+
+                        // 题目状态表
+                        febs.post(ctx + 'questionStudentStatus', {
+                            questionId:currentQuestionId,
+                            status:checkStatus?"success":"error"
+                        });
+
+                        var data = {
+                            questionId:currentQuestionId,
+                            questionAnswer:code,
+                            result:checkStatus?"success":"error"
+                        }
+
+                        // 记录数据库中
+                        febs.post(ctx + 'record', data, function () {
+                            // febs.alert.success('记录成功！');
+                        });
+                    }else if (!result){
+                        febs.alert.error('您没有运行代码！');
+                    }
+                }
+
+            }
+
+
+        })
+
+
+
+
+    });
+
+</script>

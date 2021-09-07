@@ -1,0 +1,636 @@
+<style type="text/css">
+    .layui-tab-title{
+        border-bottom-width: 0px!important;
+    }
+    .layui-tab-title li{
+        padding-left: 0px;
+    }
+    .layui-tab-title .layui-this:after{
+        border-width: 0px!important;
+    }
+    .layui-tab-content{
+        padding-left: 0px!important;
+    }
+    .layui-form-radio{
+        margin-top: 0px!important;
+    }
+
+    .layui-upload-img {
+        width: 120px;
+        height: 120px;
+        margin: 0 10px 10px 0;
+    }
+</style>
+<div class="layui-fluid layui-anim febs-anim" id="febs-role" lay-title="实验管理">
+    <div class="layui-row layui-col-space8 febs-container">
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" lay-filter="role-table-form" id="role-table-form">
+                        <div class="layui-row">
+                            <div class="layui-col-md9 layui-col-sm9 layui-col-xs9">
+                                <div class="layui-form-item">
+                                    <div class="layui-inline">
+                                        <label class="layui-form-label layui-form-label-sm">标题</label>
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="questionTitle" autocomplete="off" class="layui-input">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="layui-col-md3 layui-col-sm12 layui-col-xs12 table-action-area">
+                                <div class="layui-btn layui-btn-sm layui-btn-primary febs-button-blue-plain  table-action" id="query">
+                                    <i class="layui-icon">&#xe848;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary febs-button-green-plain  table-action" id="reset">
+                                    <i class="layui-icon">&#xe79b;</i>
+                                </div>
+                                <div class="layui-btn layui-btn-sm layui-btn-primary table-action action-more"
+                                     shiro:hasAnyPermissions="role:add,user:delete,role:export">
+                                    <i class="layui-icon">&#xe875;</i>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <table id="questionTable" lay-filter="questionTable" lay-data="{id: 'questionTable'}"></table>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md12 layui-col-sm12 layui-col-xs12">
+            <div class="layui-card">
+                <div class="layui-card-header" id="form-header">新增实验</div>
+                <div class="layui-card-body febs-table-full">
+                    <form class="layui-form layui-table-form" action="" lay-filter="role-form">
+                        <div class="layui-form-item febs-hide">
+                            <label class="layui-form-label febs-form-item-require">实验ID：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="questionId" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">实验所在章节：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="chapterNam1" autocomplete="off" class="layui-input" minlength="2"
+                                       maxlength="10" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">实验标题：</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="questionTitle" autocomplete="off" class="layui-input" minlength="2"
+                                       maxlength="10" lay-verify="range">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">实验内容：</label>
+                            <div class="layui-input-block">
+                                <div id="questionContent"></div>
+<!--                                <textarea name="questionContent" maxlength="50" class="layui-textarea" id="content"></textarea>-->
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">标准答案：</label>
+                            <div class="layui-tab">
+                                <ul class="layui-tab-title" style="border-bottom-width: 0px">
+                                    <li class="layui-this"><input type="radio" name="questionResultType" value="1" title="文本结果" checked=""></li>
+                                    <li><input type="radio" name="questionResultType" value="0" title="图片结果"></li>
+                                </ul>
+                                <div class="layui-tab-content">
+                                    <div class="layui-tab-item layui-show">
+                                        <div class="layui-input-block">
+                                            <div id="questionResult"></div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="layui-input-block">
+                                            <!--<div class="layui-upload layui-inline">-->
+                                                <!--<button type="button" class="layui-btn" id="test1">上传测试图片</button>-->
+                                                <!--<div class="layui-upload-list">-->
+                                                    <!--<img class="layui-upload-img" id="demo1">-->
+                                                    <!--<p id="demoText"></p>-->
+                                                <!--</div>-->
+                                            <!--</div>-->
+
+                                            <div class="layui-upload">
+<!--                                                <button type="button" class="layui-btn layui-inline" id ='test1'>上传测试图片</button>-->
+<!--                                                <button type="button" class="layui-btn layui-inline" >开始上传</button>-->
+<!--                                                <input type="file" name="input" onchange="onc()" multiple="multiple"  />-->
+<!--                                                <input type="submit" id="testListAction"/>-->
+                                                <input type="file" name="img" multiple="multiple"  id="upfile1"/>
+<!--                                                <input type="submit" id="testListAction"/>-->
+                                                <!--<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">-->
+                                                    <!--预览图：-->
+                                                    <!--<div class="layui-upload-list" id="demo1"></div>-->
+                                                <!--</blockquote>-->
+<!--                                                <div class="layui-upload-list">-->
+<!--                                                    <table class="layui-table">-->
+<!--                                                        <thead>-->
+<!--                                                        <tr><th>文件名</th>-->
+<!--                                                            <th>大小</th>-->
+<!--                                                            <th>状态</th>-->
+<!--                                                            <th>操作</th>-->
+<!--                                                        </tr></thead>-->
+<!--                                                        <tbody id="demoList"></tbody>-->
+<!--                                                    </table>-->
+<!--                                                </div>-->
+                                            </div>
+
+<!--                                            <div class="layui-upload">-->
+<!--                                                <button type="button" class="layui-btn" id="test2">上传结果图片</button>-->
+<!--                                                <div class="layui-upload-list">-->
+<!--                                                    <img class="layui-upload-img" id="demo2">-->
+<!--                                                    <p id="demoText2"></p>-->
+<!--                                                </div>-->
+<!--                                                -->
+<!--                                            </div>-->
+                                            <input type="file" id="upfile"  >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
+                                <label class="layui-form-label febs-form-item-require">开始：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="questionStart" name="questionStart" placeholder="请选择开始时间">
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label febs-form-item-require">结束：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" class="layui-input" id="questionEnd" name="questionEnd" placeholder="请选择截止时间">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label febs-form-item-require">所在位置：</label>
+                            <div class="layui-input-block menu-tree" style="margin-top: .8rem;"></div>
+                        </div>
+                        <div class="layui-form-item febs-hide">
+                            <button type="reset" class="layui-btn" id="reset-form"></button>
+                            <button class="layui-btn" lay-submit="" lay-filter="role-form-submit"
+                                    id="submit-form"></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="layui-card-footer">
+                    <button class="layui-btn" id="submit">保存</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="role-option">
+    <span shiro:lacksPermission="question:update,uestion:delete">
+        <span class="layui-badge-dot febs-bg-orange"></span> 无权限
+    </span>
+    <a lay-event="edit" shiro:hasPermission="question:update"><i class="layui-icon febs-edit-area febs-blue">&#xe7a4;</i></a>
+    <a lay-event="del" shiro:hasPermission="question:delete"><i class="layui-icon febs-edit-area febs-red">&#xe7f9;</i></a>
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/wangeditor@latest/dist/wangEditor.min.js"></script>
+<script data-th-inline="none" type="text/javascript">
+    layui.use(['dropdown', 'jquery', 'laydate', 'febs', 'form', 'eleTree', 'table', 'validate', 'layedit', 'upload'], function () {
+        let $ = layui.jquery,
+            laydate = layui.laydate,
+            febs = layui.febs,
+            form = layui.form,
+            table = layui.table,
+            eleTree = layui.eleTree,
+            dropdown = layui.dropdown,
+            validate = layui.validate,
+            layedit = layui.layedit,
+            upload = layui.upload,
+            $view = $('#febs-role'),
+            $query = $view.find('#query'),
+            $reset = $view.find('#reset'),
+            $submit = $view.find('#submit'),
+            $searchForm = $view.find('#role-table-form'),
+
+            $header = $view.find('#form-header'),
+            tableIns;
+
+        form.verify(validate);
+        form.render();
+
+        initTable();
+
+        const E = window.wangEditor;
+        const editor1 = new E('#questionContent')
+        editor1.create()
+
+        const editor2 = new E('#questionResult')
+        editor2.create()
+        // const editor3 = new E('#questionContent')
+        // editor1.create()
+        laydate.render({
+            elem: '#createTime',
+            range: true
+        });
+
+        // 测试图片上传
+        // upload.render({
+        //     elem: '#test1'
+        //     ,url: 'https://httpbin.org/post' //改成您自己的上传接口
+        //     ,multiple: true
+        //     ,before: function(obj){
+        //         //预读本地文件示例，不支持ie8
+        //         obj.preview(function(index, file, result){
+        //             $('#demo1').append('<img src="'+ result +'" alt="'+ file.name +'" class="layui-upload-img">')
+        //         });
+        //     }
+        //     ,done: function(res){
+        //         //上传完毕
+        //     }
+        // });
+
+
+        //多文件列表示例
+        var fd = new FormData();
+
+        var demoListView = $('#demoList')
+            ,uploadListIns = upload.render({
+            elem: '#test1'
+            ,url: ctx + 'questionFile' //改成您自己的上传接口
+            ,accept: 'file'
+            ,multiple: true
+            ,auto: false
+            ,bindAction: '#testListAction'
+            ,choose: function(obj){
+                console.log(obj)
+                console.log("选择中")
+                var files=this.files = obj.pushFile(); //将每次选择的文件追加到文件队列
+                // var fd1 = new FormData();
+                console.log(this.files)
+                    // fd.append()
+
+                // for(var i = 0;i<document.getElementById("upfile").files.length;i++)
+                //     fd.append("resultPic",document.getElementById("upfile").files[i])
+                console.log('哈哈啊哈')
+                console.log(files)
+                console.log('哈哈啊哈')
+                //读取本地文件
+                obj.preview(function(index, file, result){
+                    var tr = $(['<tr id="upload-'+ index +'">'
+                        ,'<td>'+ file.name +'</td>'
+                        ,'<td>'+ (file.size/1024).toFixed(1) +'kb</td>'
+                        ,'<td>等待上传</td>'
+                        ,'<td>'
+                        ,'<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                        ,'<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        ,'</td>'
+                        ,'</tr>'].join(''));
+
+                    //单个重传
+                    tr.find('.demo-reload').on('click', function(){
+                        obj.upload(index, file);
+                    });
+
+                    //删除
+                    tr.find('.demo-delete').on('click', function(){
+                        delete files[index]; //删除对应的文件
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = ''; //清空 input file 值，以免删除后出现同名文件不可选
+                    });
+
+                    demoListView.append(tr);
+                });
+                console.log('选择结束')
+            }
+            ,done: function(res, index, upload){
+                console.log('开始上传')
+                if(res.files.file){ //上传成功
+                    var tr = demoListView.find('tr#upload-'+ index)
+                        ,tds = tr.children();
+                    tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                    tds.eq(3).html(''); //清空操作
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            ,error: function(index, upload){
+                console.log('上传失败')
+                var tr = demoListView.find('tr#upload-'+ index)
+                    ,tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+
+        var uploadInst2 = upload.render({
+            elem: '#test2'
+            ,url: ctx + 'questionFile' //改成您自己的上传接口
+            ,before: function(obj){
+                //预读本地文件示例，不支持ie8
+                obj.preview(function(index, file, result){
+                    $('#demo2').attr('src', result); //图片链接（base64）
+                    // console.log(result)
+                    // console.log(ctx + "questionFile")
+
+                });
+            }
+            ,done: function(res){
+                //如果上传失败
+                if(res.code > 0){
+
+                    console.log(res.code )
+                    return layer.msg('上传失败');
+                }
+                //上传成功
+            }
+            ,error: function(){
+                console.log('上传失败')
+                //演示失败状态，并实现重传
+                var demoText = $('#demoText2');
+                demoText.html('<span style="color: #ff5722;">上传失败</span> <a class="layui-btn layui-btn-xs demo-reload">重试</a>');
+                demoText.find('.demo-reload').on('click', function(){
+                    uploadInst2.upload();
+                });
+            }
+        });
+
+        //开始时间
+        laydate.render({
+            elem: '#questionStart',
+            type: 'datetime'
+        });
+        //结束时间
+        laydate.render({
+            elem: '#questionEnd',
+            type: 'datetime'
+        });
+
+        let menuTree = eleTree.render({
+            elem: '.menu-tree',
+            url: ctx + 'menu/tree',
+            showCheckbox: true,
+            where: {
+                "invalidate_ie_cache": new Date()
+            },
+            accordion: true,
+            checkStrictly: true,
+            renderAfterExpand: false,
+            request: {
+                name: "title",
+                key: "id",
+                children: "childs",
+                checked: "checked",
+                data: "data"
+            },
+            response: {
+                statusName: "code",
+                statusCode: 200,
+                dataName: "data"
+            }
+        });
+
+        dropdown.render({
+            elem: $view.find('.action-more'),
+            click: function (name, elem, event) {
+                let checkStatus = table.checkStatus('questionTable');
+                if (name === 'add') {
+                    resetRoleForm();
+                    febs.alert.info("请在表单中填写相关信息");
+                }
+                if (name === 'delete') {
+                    if (!checkStatus.data.length) {
+                        febs.alert.warn('请选择需要删除的实验');
+                    } else {
+                        febs.modal.confirm('删除实验', '确定删除所选实验？', function () {
+                            let questionIds = [];
+                            layui.each(checkStatus.data, function (key, item) {
+                                questionIds.push(item.roleId);
+                            });
+                            deleteQuestions(questionIds.join(','));
+                        });
+                    }
+                }
+                if (name === 'export') {
+                    let params = getQueryParams();
+                    params.pageSize = $view.find(".layui-laypage-limits option:selected").val();
+                    params.pageNum = $view.find(".layui-laypage-em").next().html();
+                    febs.download(ctx + 'question/excel', params, '实验题目表.xlsx');
+                }
+            },
+            options: [{
+                name: 'add',
+                title: '新增实验',
+                perms: 'question:add'
+            }, {
+                name: 'delete',
+                title: '删除实验',
+                perms: 'question:delete'
+            }, {
+                name: 'export',
+                title: '导出Excel',
+                perms: 'question:export'
+            }]
+        });
+
+        table.on('tool(questionTable)', function (obj) {
+            let data = obj.data,
+                layEvent = obj.event;
+            if (layEvent === 'edit') {
+                $header.text('修改实验');
+                // console.log("1 2 3 4 5 6")
+                // console.log(data.questionResultType)
+                form.val("role-form", {
+                    "chapterNam1":data.chapterNam1,
+                    "chapterName":data.chapterName,
+                    "questionId": data.questionId,
+                    "questionTitle": data.questionTitle,
+                    "questionResultType": data.questionResultType,
+                    "questionStart": data.questionStart,
+                    "questionEnd": data.questionEnd
+                });
+                editor1.txt.html(data.questionContent)
+                editor2.txt.html(data.questionResult)
+                if (data.chapterId) {
+                    menuTree.setChecked([data.chapterId], true);
+                } else {
+                    menuTree.setChecked([], true);
+                }
+            }
+            if (layEvent === 'del') {
+
+                febs.modal.confirm('删除实验', '确定删除该实验？', function () {
+                    deleteQuestions(data.questionId);
+
+                });
+                // febs.get(ctx + 'chapterQuestion/delete', data, function (recordData) {
+                //
+                //       alert("删除成功");
+
+                // });
+            }
+
+        });
+
+        $query.on('click', function () {
+            resetRoleForm();
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
+
+        $reset.on('click', function () {
+            resetRoleForm();
+            $searchForm[0].reset();
+            tableIns.reload({where: getQueryParams(), page: {curr: 1}});
+        });
+
+        $submit.on('click', function () {
+            $view.find('#submit-form').trigger('click');
+        });
+
+        function initTable() {
+            tableIns = febs.table.init({
+                elem: $view.find('#questionTable'),
+                id: 'questionTable',
+                type:"get",
+                url: ctx + 'question/list',
+                cols: [[
+                    {type: 'checkbox'},
+                    {field: 'chapterNam1', title: '实验所在章节', minWidth: 120},
+                    {field: 'questionTitle', title: '实验名称', minWidth: 120},
+                    {field: 'chapterName', title: '实验题目'},
+                    {field: 'createName', title: '创建人'},
+                    {field: 'questionContent', title: '实验描述'},
+                    {field: 'createTime', title: '创建时间', minWidth: 180},
+                    {title: '操作', toolbar: '#role-option', width: 100}
+                ]]
+            });
+        }
+
+        function getQueryParams() {
+            let params = $searchForm.serializeJson();
+            params.invalidate_ie_cache = new Date();
+            return params;
+        }
+
+        function resetRoleForm() {
+            $view.find('#reset-form').trigger('click');
+            $header.text('新增实验');
+            menuTree.setChecked([], true);
+            menuTree.unExpandAll();
+            editor1.txt.clear();
+            editor2.txt.clear();
+        }
+
+        form.on('submit(role-form-submit)', function (data) {
+
+            // console.log("1 2 3 3 ")
+            // console.log(data)
+            // console.log(data.field.chapterNam1)
+            // console.log("1 2 3 3 ")
+
+            let selected = menuTree.getChecked(false, true);
+            if (selected.length == 0){
+                febs.modal.confirm('提示', '未给当前实验分配菜单，请选择菜单');
+                return ;
+            }
+            if (selected.length > 1){
+                febs.modal.confirm('提示', '您选择了多个菜单！最多选择一项。');
+                return ;
+            }
+            let chapterId;
+            layui.each(selected, function (key, item) {
+                chapterId = item.id;
+
+                // data.field.chapterId = chapterId;
+            });
+            // data.field.chapterName1= chapterName;
+            data.field.chapterId = chapterId;
+            data.field.questionContent = editor1.txt.html()
+            data.field.questionResult = editor2.txt.html()
+
+            // 创建表单对象
+            var fd = new FormData();
+
+            for (var key in data.field){
+                fd.append(key,data.field[key])
+
+                console.log(data.field[key])
+            }
+            if (data.field.questionResultType == 0){
+                // fd.append("resultPic",document.getElementById("upfile").files[0])
+                for(var i = 0;i<document.getElementById("upfile").files.length;i++)
+                fd.append("resultPic",document.getElementById("upfile").files[i])
+                for(var i = 0;i<document.getElementById("upfile1").files.length;i++)
+                    fd.append("testPic1",document.getElementById("upfile1").files[i])
+            }
+
+
+
+            // 创建表单对象
+            // var fd1 = new FormData();
+            // for (var key in data.field){
+            //     fd1.append(key,data.field[key])
+            // }
+            // if (data.field.questionResultType == 0){
+            //     console.log('你好')
+            //     fd1.append("resultPic",document.getElementById("upfile1").files[0])
+            //     console.log('你好')
+            // }
+            // console.log("111111111")
+            addOrUpdateRole(fd);
+            // addOrUpdateRole(fd1);
+            // console.log("111111111")
+
+            return false;
+        });
+
+        function deleteQuestions(questionIds) {
+            febs.get(ctx + 'question/delete/' + questionIds, null, function () {
+                febs.alert.success('删除实验成功');
+                $query.trigger('click');
+            })
+        }
+
+        let addOrUpdateRole = function (data) {
+            // console.log("222222222")
+            console.log(data)
+
+            if ($header.text() === '修改实验') {
+                // febs.post(ctx + 'question/update', data, function () {
+                //     febs.alert.success('修改实验成功');
+                //     $query.trigger('click');
+                // });
+                console.log("修改实验")
+                $.ajax({
+                    url: ctx +  'question/update',
+                    type: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        febs.alert.success('修改实验成功');
+                        $query.trigger('click');
+                    },
+                    error: function (e) {
+                    }
+                });
+            } else {
+                // febs.post(ctx + 'question', data, function () {
+                //     febs.alert.success('新增实验成功');
+                //     $query.trigger('click');
+                // });
+                $.ajax({
+                    url: ctx +  'question',
+                    type: "post",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        // console.log(data)
+                        febs.alert.success('新增实验成功');
+                        $query.trigger('click');
+                    },
+                    error: function (e) {
+                        febs.alert.success('新增实验成功');
+                    }
+                });
+
+            }
+        }
+    });
+</script>

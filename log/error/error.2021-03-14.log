@@ -1,0 +1,1 @@
+2021-03-14 09:34:50 febs-shiro ERROR http-nio-8848-exec-8 cc.mrbird.febs.common.handler.GlobalExceptionHandler UnauthorizedException, Subject does not have permission [progress:view]
